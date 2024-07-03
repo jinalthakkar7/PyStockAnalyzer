@@ -1,49 +1,54 @@
-emd
-===
-Carries out empirical mode decomposition of the provided function. Written following [Huang et al. (1998; RSPA 454:903)](http://adsabs.harvard.edu/abs/1998RSPSA.454..903E).
 
-I wrote this to be used with the Astrophysically Robust Correction of [Roberts et al. (2013 MNRAS 435:3639)](http://adsabs.harvard.edu/abs/2013MNRAS.tmp.2261R), see
-https://github.com/parkus/arc.
+# PyStockAnalyzer
 
-Please acknowledge R. O. Parke Loyd if you use this code in your research.
+PyStockAnalyzer is an advanced Python library designed for analyzing stock market data. It supports functionalities such as historical data analysis, news sentiment analysis, and empirical mode decomposition, ideal for traders, data analysts, and financial technology enthusiasts.
 
-Example Use
------------
-(also in test_script.py)
+## Features
+- **Historical Data Analysis**: Retrieve and manipulate historical stock prices and market data.
+- **News Sentiment Analysis**: Analyze the sentiment of financial news articles.
+- **Visualization**: Create visual representations of stock data trends and patterns.
+- **Empirical Mode Decomposition (EMD)**: Identify and analyze underlying trends in stock price data.
 
-```python
-import numpy as np
-import emd
-import matplotlib.pyplot as plt
+## Getting Started
+### Prerequisites
+Ensure Python 3.x is installed on your system. Download Python from https://www.python.org/downloads/.
 
-# GENERATE A POLYNOMIAL + SINE TEST FUNCTION
-N = 200
-t = np.arange(200, dtype=float) - N / 2
-amp = 10.0
-
-# polynomial to start
-y = t**2
-fac = amp / np.max(y) #but let's make the numbers easier to read
-y *= fac
-
-# but let's give it an offset just to make sure that doesn't screw with things
-y += amp / 5.0
-
-# and now add in a sine
-period = N / 10.0
-phase = np.random.uniform(0.0, 2*np.pi)
-y += (amp / 10.0) * np.sin(2*np.pi * t / period + phase)
-
-# ADD NOISE, IF DESIRED
-y += np.random.normal(0.0, amp/50.0, N)
-
-# DECOMPOSE
-c, r = emd.emd(t, y)
-
-# PLOT
-pf, = plt.plot(t, y)
-pr, = plt.plot(t, r)
-pcs = plt.plot(t, c, 'k-')
-
-plt.legend((pf, pcs[0], pr), ('original function', 'modes', 'residual'))
+### Installation
+Clone the repository and install the required dependencies:
+```bash
+git clone https://github.com/jinalthakkar7/PyStockAnalyzer.git
+cd PyStockAnalyzer
+pip install -r requirements.txt
 ```
+
+## Usage
+Example to retrieve historical data and perform sentiment analysis:
+```python
+from pystocklib.historical import HistoricalData
+from pystocklib.sentiment import analyze_sentiment
+
+# Load historical data
+hist_data = HistoricalData('AAPL')
+print(hist_data.get_high())
+
+# Analyze news sentiment
+sentiment = analyze_sentiment('Apple Inc. news article')
+print(sentiment)
+```
+
+## Documentation
+Detailed documentation is available in the docs folder or visit the documentation page.
+
+## Contributing
+Contributions are welcome. Follow these steps to contribute:
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Authors
+- Jinal Thakkar - Initial work - JinalThakkar7
